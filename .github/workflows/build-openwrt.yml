@@ -222,7 +222,7 @@ jobs:
         token: ${{ env.GITHUB_TOKEN }}
 
     - name: 删除自动发布的旧固件
-      uses: s1545151561/delete-older-releases@v0.3.3
+      uses: dev-drprasad/delete-older-releases@v0.3.3
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
         keep_latest: 5
