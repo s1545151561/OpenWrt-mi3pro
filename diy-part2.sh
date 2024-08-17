@@ -16,6 +16,8 @@
   
 # 修改主机名字，把 iStore OS 修改你喜欢的就行（不能纯数字或者使用中文）
   sed -i 's/OpenWrt/MTkej/g' package/base-files/files/bin/config_generate  
+#  iStore OS 主题
+  git clone https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 
 # ttyd 自动登录
   sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${GITHUB_WORKSPACE}/openwrt/package/feeds/packages/ttyd/files/ttyd.config
