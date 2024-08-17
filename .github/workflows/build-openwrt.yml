@@ -37,6 +37,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
+ # 初始化运行环境
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -50,6 +51,7 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
+#克隆源代码
     - name: Clone source code
       working-directory: /workdir
       run: |
@@ -57,6 +59,7 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
+# 加载自定义源
     - name: Load custom feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
@@ -70,6 +73,7 @@ jobs:
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
+# 加载自定义配置
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
@@ -78,6 +82,7 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
+#  SSH链接
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
       if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
@@ -85,6 +90,7 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
+# 下载软件包
     - name: Download package
       id: package
       run: |
@@ -94,6 +100,7 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
+# 编译固件
     - name: Compile the firmware
       id: compile
       run: |
