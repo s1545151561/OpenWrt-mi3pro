@@ -2,7 +2,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build lede
+name: Build openwrt-MI3pro
 
 on:
   repository_dispatch:
